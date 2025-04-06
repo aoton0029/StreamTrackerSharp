@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "StreamTracker (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "StreamTracker (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
