@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35825.156
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StreamTracker", "StreamTracker\StreamTracker.csproj", "{73AAE4F3-038C-4BA5-95CB-761026D9072E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StreamLib", "StreamLib\StreamLib.csproj", "{D66CC520-247A-4AE5-9DFF-62CA342F8F3F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StreamTrackerWinforms", "StreamTrackerWinforms\StreamTrackerWinforms.csproj", "{DA1331A9-D7E8-4BD8-9C9A-992FEBD7198D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StreamTracker", "StreamTracker\StreamTracker.csproj", "{56D1DF2D-E8F7-44E4-BF39-F8D3AF87F4BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,24 +19,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{73AAE4F3-038C-4BA5-95CB-761026D9072E}.Debug|ARM64.ActiveCfg = Debug|ARM64
-		{73AAE4F3-038C-4BA5-95CB-761026D9072E}.Debug|ARM64.Build.0 = Debug|ARM64
-		{73AAE4F3-038C-4BA5-95CB-761026D9072E}.Debug|ARM64.Deploy.0 = Debug|ARM64
-		{73AAE4F3-038C-4BA5-95CB-761026D9072E}.Debug|x64.ActiveCfg = Debug|x64
-		{73AAE4F3-038C-4BA5-95CB-761026D9072E}.Debug|x64.Build.0 = Debug|x64
-		{73AAE4F3-038C-4BA5-95CB-761026D9072E}.Debug|x64.Deploy.0 = Debug|x64
-		{73AAE4F3-038C-4BA5-95CB-761026D9072E}.Debug|x86.ActiveCfg = Debug|x86
-		{73AAE4F3-038C-4BA5-95CB-761026D9072E}.Debug|x86.Build.0 = Debug|x86
-		{73AAE4F3-038C-4BA5-95CB-761026D9072E}.Debug|x86.Deploy.0 = Debug|x86
-		{73AAE4F3-038C-4BA5-95CB-761026D9072E}.Release|ARM64.ActiveCfg = Release|ARM64
-		{73AAE4F3-038C-4BA5-95CB-761026D9072E}.Release|ARM64.Build.0 = Release|ARM64
-		{73AAE4F3-038C-4BA5-95CB-761026D9072E}.Release|ARM64.Deploy.0 = Release|ARM64
-		{73AAE4F3-038C-4BA5-95CB-761026D9072E}.Release|x64.ActiveCfg = Release|x64
-		{73AAE4F3-038C-4BA5-95CB-761026D9072E}.Release|x64.Build.0 = Release|x64
-		{73AAE4F3-038C-4BA5-95CB-761026D9072E}.Release|x64.Deploy.0 = Release|x64
-		{73AAE4F3-038C-4BA5-95CB-761026D9072E}.Release|x86.ActiveCfg = Release|x86
-		{73AAE4F3-038C-4BA5-95CB-761026D9072E}.Release|x86.Build.0 = Release|x86
-		{73AAE4F3-038C-4BA5-95CB-761026D9072E}.Release|x86.Deploy.0 = Release|x86
 		{D66CC520-247A-4AE5-9DFF-62CA342F8F3F}.Debug|ARM64.ActiveCfg = Debug|Any CPU
 		{D66CC520-247A-4AE5-9DFF-62CA342F8F3F}.Debug|ARM64.Build.0 = Debug|Any CPU
 		{D66CC520-247A-4AE5-9DFF-62CA342F8F3F}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -61,6 +43,18 @@ Global
 		{DA1331A9-D7E8-4BD8-9C9A-992FEBD7198D}.Release|x64.Build.0 = Release|Any CPU
 		{DA1331A9-D7E8-4BD8-9C9A-992FEBD7198D}.Release|x86.ActiveCfg = Release|Any CPU
 		{DA1331A9-D7E8-4BD8-9C9A-992FEBD7198D}.Release|x86.Build.0 = Release|Any CPU
+		{56D1DF2D-E8F7-44E4-BF39-F8D3AF87F4BC}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{56D1DF2D-E8F7-44E4-BF39-F8D3AF87F4BC}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{56D1DF2D-E8F7-44E4-BF39-F8D3AF87F4BC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{56D1DF2D-E8F7-44E4-BF39-F8D3AF87F4BC}.Debug|x64.Build.0 = Debug|Any CPU
+		{56D1DF2D-E8F7-44E4-BF39-F8D3AF87F4BC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{56D1DF2D-E8F7-44E4-BF39-F8D3AF87F4BC}.Debug|x86.Build.0 = Debug|Any CPU
+		{56D1DF2D-E8F7-44E4-BF39-F8D3AF87F4BC}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{56D1DF2D-E8F7-44E4-BF39-F8D3AF87F4BC}.Release|ARM64.Build.0 = Release|Any CPU
+		{56D1DF2D-E8F7-44E4-BF39-F8D3AF87F4BC}.Release|x64.ActiveCfg = Release|Any CPU
+		{56D1DF2D-E8F7-44E4-BF39-F8D3AF87F4BC}.Release|x64.Build.0 = Release|Any CPU
+		{56D1DF2D-E8F7-44E4-BF39-F8D3AF87F4BC}.Release|x86.ActiveCfg = Release|Any CPU
+		{56D1DF2D-E8F7-44E4-BF39-F8D3AF87F4BC}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

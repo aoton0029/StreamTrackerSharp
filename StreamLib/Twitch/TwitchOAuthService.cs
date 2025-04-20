@@ -1,48 +1,95 @@
-﻿using Microsoft.Extensions.Configuration;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace StreamLib.Twitch
 {
-    interface ITwitchOAuthService
+    public class TwitchOAuthService
     {
+        private readonly string _clientId;
+        private readonly string _clientSecret;
+        private readonly string _redirectUri;
+        private readonly string _scopes;
 
-    }
-
-    public class TwitchOAuthService : ITwitchOAuthService
-    {
-        private readonly HttpClient _httpClient;
-        private readonly IConfiguration _config;
-
-        public TwitchOAuthService(HttpClient httpClient, IConfiguration config)
+        public TwitchOAuthService(string clientId, string clientSecret, string redirectUri, string scopes)
         {
-            _httpClient = httpClient;
-            _config = config;
+            _clientId = clientId;
+            _clientSecret = clientSecret;
+            _redirectUri = redirectUri;
+            _scopes = scopes;
         }
 
-        public async Task<AccessToken> ExchangeCodeAsync(string code)
+        public string GenerateAuthorizationUrl()
         {
-            var clientId = _config["Twitch:ClientId"];
-            var clientSecret = _config["Twitch:ClientSecret"];
-            var redirectUri = _config["Twitch:RedirectUri"];
+            return $"https://id.twitch.tv/oauth2/authorize?client_id={_clientId}&redirect_uri={_redirectUri}&response_type=code&scope={_scopes}";
+        }
 
-            var response = await _httpClient.PostAsync("https://id.twitch.tv/oauth2/token", new FormUrlEncodedContent(new Dictionary<string, string>
+        public async Task<string?> ListenForAuthorizationCodeAsync()
+        {
+            Debug.Print($"ListenForAuthorizationCodeAsync");
+            using var listener = new HttpListener();
+            listener.Prefixes.Add(_redirectUri + "/");
+            listener.Start();
+
+            var context = await listener.GetContextAsync();
+            var code = context.Request.QueryString["code"];
+            Debug.Print($"CODE : {code}");
+
+            using var writer = new StreamWriter(context.Response.OutputStream);
+            writer.WriteLine("認証が完了しました。アプリに戻ってください。");
+            writer.Flush();
+
+            return code;
+        }
+
+        public async Task<TokenResponse?> ExchangeCodeForTokenAsync(string code)
+        {
+            Debug.Print($"ExchangeCodeForTokenAsync");
+            using var client = new HttpClient();
+
+            var values = new Dictionary<string, string>
             {
-                ["client_id"] = clientId,
-                ["client_secret"] = clientSecret,
-                ["code"] = code,
-                ["grant_type"] = "authorization_code",
-                ["redirect_uri"] = redirectUri
-            }));
+                { "client_id", _clientId },
+                { "client_secret", _clientSecret },
+                { "code", code },
+                { "grant_type", "authorization_code" },
+                { "redirect_uri", _redirectUri }
+            };
 
-            response.EnsureSuccessStatusCode();
+            var response = await client.PostAsync("https://id.twitch.tv/oauth2/token", new FormUrlEncodedContent(values));
+            if (!response.IsSuccessStatusCode)
+                return null;
+
             var json = await response.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<AccessToken>(json);
+            return JsonSerializer.Deserialize<TokenResponse>(json);
+        }
+
+        public async Task<TokenResponse?> RefreshTokenAsync(string refreshToken)
+        {
+            using var client = new HttpClient();
+
+            var values = new Dictionary<string, string>
+            {
+                { "client_id", _clientId },
+                { "client_secret", _clientSecret },
+                { "grant_type", "refresh_token" },
+                { "refresh_token", refreshToken }
+            };
+
+            var response = await client.PostAsync("https://id.twitch.tv/oauth2/token", new FormUrlEncodedContent(values));
+            if (!response.IsSuccessStatusCode)
+                return null;
+
+            var json = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<TokenResponse>(json);
         }
     }
+
+
 
 }

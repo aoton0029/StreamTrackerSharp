@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace StreamLib.Youtube
 {
-    public interface IYouTubeApiService
+    class YoutubeModels
     {
-        Task<IEnumerable<YouTubeVideo>> GetVideosAsync(string channelId);
     }
-
 }

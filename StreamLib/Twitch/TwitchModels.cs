@@ -2,45 +2,78 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace StreamLib.Twitch
 {
-    public class AccessToken
+    public class TokenResponse
     {
-        public string Token { get; set; }
-        public string RefreshToken { get; set; }
+        [JsonPropertyName("access_token")]
+        public string AccessToken { get; set; } = string.Empty;
+
+        [JsonPropertyName("refresh_token")]
+        public string RefreshToken { get; set; } = string.Empty;
+
+        [JsonPropertyName("expires_in")]
         public int ExpiresIn { get; set; }
-        public string TokenType { get; set; }
+
+        [JsonPropertyName("scope")]
+        public List<string> Scope { get; set; } = new();
+
+        [JsonPropertyName("token_type")]
+        public string TokenType { get; set; } = "bearer";
     }
 
-
-    public class TwitchChannel
+    public class TwitchStreamResponse
     {
-        public string Id { get; }
-        public string DisplayName { get; }
-
-        public TwitchChannel(string id, string displayName)
-        {
-            Id = id;
-            DisplayName = displayName;
-        }
+        public List<TwitchStream> Data { get; set; } = new();
     }
 
-    public class TwitchLiveStream
+    public class TwitchStream
     {
-        public string UserId { get; }
-        public string UserName { get; }
-        public string Title { get; }
-        public int ViewerCount { get; }
+        public string Id { get; set; } = "";
+        public string UserId { get; set; } = "";
+        public string UserLogin { get; set; } = "";
+        public string UserName { get; set; } = "";
+        public string Title { get; set; } = "";
+        public int ViewerCount { get; set; }
+        public string ThumbnailUrl { get; set; } = "";
+        public DateTime StartedAt { get; set; }
+        public string Language { get; set; } = "";
+        public string GameName { get; set; } = "";
+    }
 
-        public TwitchLiveStream(string userId, string userName, string title, int viewerCount)
-        {
-            UserId = userId;
-            UserName = userName;
-            Title = title;
-            ViewerCount = viewerCount;
-        }
+    public class TwitchUserResponse
+    {
+        public List<TwitchUser> Data { get; set; } = new();
+    }
+
+    public class TwitchUser
+    {
+        public string Id { get; set; } = "";
+        public string Login { get; set; } = "";
+        public string DisplayName { get; set; } = "";
+        public string ProfileImageUrl { get; set; } = "";
+    }
+
+    public class TwitchFollowedResponse
+    {
+        public List<TwitchFollowedChannel> Data { get; set; } = new();
+        public TwitchPagination? Pagination { get; set; }
+    }
+
+    public class TwitchFollowedChannel
+    {
+        public string BroadcasterId { get; set; } = "";
+        public string BroadcasterLogin { get; set; } = "";
+        public string BroadcasterName { get; set; } = "";
+        public DateTime FollowedAt { get; set; }
+    }
+
+    public class TwitchPagination
+    {
+        public string? Cursor { get; set; }
     }
 
 }
