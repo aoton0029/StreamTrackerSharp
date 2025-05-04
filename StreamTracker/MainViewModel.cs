@@ -44,13 +44,34 @@ namespace StreamTracker
         {
             try
             {
+                // 認証URLを生成
                 var authUrl = _oAuthService.GenerateAuthorizationUrl();
-                Process.Start(new ProcessStartInfo(authUrl) { UseShellExecute = true });
-                var code = await _oAuthService.ListenForAuthorizationCodeAsync();
-                var token = await _oAuthService.ExchangeCodeForTokenAsync(code!);
+
+                // WebView2ウィンドウを表示して認証
+                var loginWindow = new TwitchLoginWindow(authUrl, "http://localhost");
+                var windowResult = loginWindow.ShowDialog();
+
+                string code = null;
+                if (windowResult == true)
+                {
+                    code = await loginWindow.GetAuthorizationCodeAsync();
+                }
+
+                if (string.IsNullOrEmpty(code))
+                {
+                    MessageBox.Show("認証が取り消されました。", "エラー", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                var token = await _oAuthService.ExchangeCodeForTokenAsync(code);
+                if (token == null)
+                {
+                    MessageBox.Show("トークンの取得に失敗しました。", "エラー", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
 
                 // APIサービス初期化
-                _apiService = new TwitchApiService(token!.AccessToken, user_id);
+                _apiService = new TwitchApiService(token.AccessToken, user_id, _oAuthService);
                 var user = await _apiService.GetCurrentUserAsync();
 
                 // バックグラウンドサービス開始
@@ -64,7 +85,7 @@ namespace StreamTracker
             }
             catch (Exception ex)
             {
-
+                MessageBox.Show($"エラーが発生しました: {ex.Message}", "エラー", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

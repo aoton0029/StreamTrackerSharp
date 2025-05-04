@@ -88,6 +88,7 @@ namespace StreamLib.Twitch
             var json = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<TokenResponse>(json);
         }
+
     }
 
 
